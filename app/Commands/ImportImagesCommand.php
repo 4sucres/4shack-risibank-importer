@@ -41,6 +41,22 @@ class ImportImagesCommand extends Command
             $chunk->each(function ($noelshackImage) use ($bar) {
                 $fileName = str_replace('/', '-', $noelshackImage->url);
 
+                $image = DB::table('images')
+                    ->where('path', $fileName)
+                    ->first();
+
+                if ($image) {
+                    // File was duplicated :sad:
+                    DB::table('noelshack_images')
+                        ->where('id', $noelshackImage->id)
+                        ->update([
+                            'image_id' => $image->id,
+                            'updated_at' => now(),
+                        ]);
+
+                    return;
+                }
+
                 try {
                     $content = file_get_contents('https://image.noelshack.com/fichiers/' . $noelshackImage->url);
                 } catch (\Throwable $th) {
