@@ -17,10 +17,12 @@
     ],
     "require": {
         "php": "^7.2",
+        "fabpot/goutte": "^3.2",
         "illuminate/bus": "^6.0",
         "illuminate/database": "^6.0",
         "illuminate/queue": "^6.0",
         "laravel-zero/framework": "^6.0",
+        "league/flysystem-aws-s3-v3": "^1.0",
         "zendframework/zend-text": "^2.7"
     },
     "require-dev": {
