@@ -31,7 +31,7 @@ class ImportRisiBankCommand extends Command
     public function handle()
     {
         $failedTries = 0;
-        $triesTreshold = 50;
+        $triesTreshold = 100;
 
         // Get latest id
         $id = DB::table('noelshack_images')
