@@ -14,7 +14,7 @@ class ImportRisiBankCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'import:risibank';
+    protected $signature = 'import:risibank {--then-import-images} {--then}';
 
     /**
      * The description of the command.
@@ -31,7 +31,7 @@ class ImportRisiBankCommand extends Command
     public function handle()
     {
         $failedTries = 0;
-        $triesTreshold = 50;
+        $triesTreshold = 100;
 
         // Get latest id
         $id = DB::table('noelshack_images')
@@ -82,6 +82,10 @@ class ImportRisiBankCommand extends Command
             ]);
 
             $this->line('#' . $id . ' saved into database');
+        }
+
+        if ($this->option('then-import-images')) {
+            $this->call('import:images');
         }
     }
 
