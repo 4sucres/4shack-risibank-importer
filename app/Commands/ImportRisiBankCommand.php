@@ -3,8 +3,10 @@
 namespace App\Commands;
 
 use Goutte\Client;
+use App\Helpers\SlackNotification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Support\Carbon;
 use LaravelZero\Framework\Commands\Command;
 
 class ImportRisiBankCommand extends Command
@@ -14,7 +16,7 @@ class ImportRisiBankCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'import:risibank {--then-import-images} {--then}';
+    protected $signature = 'import:risibank {--then-import-images}';
 
     /**
      * The description of the command.
@@ -30,8 +32,11 @@ class ImportRisiBankCommand extends Command
      */
     public function handle()
     {
+        $this->notify('4shack is importing the RisiBank...' . "\r\n" . 'https://media.discordapp.net/attachments/636595347317325829/637409348183785512/k2wYUx3.gif');
+
         $failedTries = 0;
         $triesTreshold = 100;
+        $importedImages = 0;
 
         // Get latest id
         $id = DB::table('noelshack_images')
@@ -82,11 +87,22 @@ class ImportRisiBankCommand extends Command
             ]);
 
             $this->line('#' . $id . ' saved into database');
+            $importedImages++;
         }
+
+        $this->info($importedImages . ' added into database');
+        $this->notify($importedImages . ' added into database 👍');
 
         if ($this->option('then-import-images')) {
             $this->call('import:images');
         }
+    }
+
+    public function notify($message)
+    {
+        SlackNotification::send(
+            now()->format('d/m/Y H:i:s') . ' : ' . $message
+        );
     }
 
     /**

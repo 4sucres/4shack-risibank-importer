@@ -2,6 +2,7 @@
 
 namespace App\Commands;
 
+use App\Helpers\SlackNotification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -35,7 +36,8 @@ class ImportImagesCommand extends Command
             ->where('image_id', null)
             ->orderBy('risibank_id', 'asc');
 
-        $bar = $this->output->createProgressBar($noelshackImages->count());
+        $bar = $this->output->createProgressBar($count = $noelshackImages->count());
+        $this->notify('4shack is now importing ' . $count . ' images from NoelShack...');
 
         $noelshackImages->chunk(200, function ($chunk) use ($bar) {
             $chunk->each(function ($noelshackImage) use ($bar) {
@@ -96,6 +98,14 @@ class ImportImagesCommand extends Command
         });
 
         $bar->finish();
+        $this->notify('All done ✅');
+    }
+
+    public function notify($message)
+    {
+        SlackNotification::send(
+            now()->format('d/m/Y H:i:s') . ' : ' . $message
+        );
     }
 
     /**
