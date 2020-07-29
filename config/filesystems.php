@@ -5,7 +5,7 @@ return [
     'disks' => [
         'local' => [
             'driver' => 'local',
-            'root' => getcwd(),
+            'root' => env('FILESYSTEM_LOCAL_PATH', getcwd()),
         ],
         's3' => [
             'driver' => 's3',
