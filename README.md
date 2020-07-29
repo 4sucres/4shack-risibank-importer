@@ -1,4 +1,4 @@
-<p align="center"><img src="https://i.imgur.com/dIqLjJ9.png" width="512"></p>
+<p align="center"><img src="https://i.imgur.com/boxRY2S.png" width="512"></p>
 
 <p align="center">
 <img alt="Discord" src="https://img.shields.io/discord/570066757021204515?label=discord&logo=discord&style=flat-square">
@@ -8,7 +8,7 @@
 
 Console application construite avec [Laravel Zero](https://laravel-zero.com/) permettant d'aspirer les stickers listés sur RisiBank et hébergés sur NoelShack.
 
-Dans l'état actuel, l'application nécessite de partager une base de données avec le projet parent [4shack](https://github.com/4sucres/4shack), ainsi qu'un système de stockage compatible s3.
+Dans l'état actuel, l'application nécessite de partager une base de données avec le projet parent [sucresware/4shack](https://github.com/sucresware/4shack), ainsi qu'un filesystem commun ou un système de stockage compatible s3.
 
 ## Commandes disponibles
 
